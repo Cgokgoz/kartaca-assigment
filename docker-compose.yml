@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  flask:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./flask
+    ports:
+      - '4444:4444'
+
+  nodejs:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nodejs
+    ports:
+      - '5555:5555'
+      
+  haproxy:
+    restart: always
+    image: 'haproxy:2.3-alpine'
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy:ro
+    ports:
+      - '8888:8888'
